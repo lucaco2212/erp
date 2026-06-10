@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sistema académico de cuentas contables</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="hero">
+      <p class="eyebrow">Contabilidad básica</p>
+      <h1>Sistema académico de cuentas contables</h1>
+      <p>Representa cuentas, clasifícalas y valida asientos contables con las reglas básicas del Debe y Haber.</p>
+    </header>
+
+    <main>
+      <section class="card" aria-labelledby="concepto-title">
+        <h2 id="concepto-title">1. Análisis conceptual de la cuenta contable</h2>
+        <p><strong>Definición:</strong> una cuenta contable es el registro ordenado donde se acumulan los aumentos, disminuciones y saldos de un elemento económico de la empresa.</p>
+        <div class="grid two-columns">
+          <article class="subcard">
+            <h3>Estructura de una cuenta</h3>
+            <ul class="structure-list">
+              <li><strong>Nombre:</strong> identifica la cuenta.</li>
+              <li><strong>Código:</strong> ubica la cuenta dentro del plan contable.</li>
+              <li><strong>Debe:</strong> lado izquierdo del registro.</li>
+              <li><strong>Haber:</strong> lado derecho del registro.</li>
+              <li><strong>Saldo:</strong> diferencia acumulada entre Debe y Haber.</li>
+            </ul>
+          </article>
+          <article class="subcard">
+            <h3>Estructura de datos</h3>
+            <pre><code>{
+  id,
+  codigo,
+  nombre,
+  tipo_cuenta,
+  clasificacion,
+  corriente_no_corriente,
+  saldo
+}</code></pre>
+            <p>La tabla SQLite <strong>CuentaContable</strong> almacena los campos mínimos requeridos.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="clasificacion-title">
+        <h2 id="clasificacion-title">2. Clasificación de cuentas</h2>
+        <p>Las cuentas se agrupan por tipo, por corriente/no corriente y por su clasificación contable específica.</p>
+        <div id="accounts" class="account-groups" aria-live="polite"></div>
+        <article class="impact-box">
+          <h3>Impacto de la clasificación</h3>
+          <ul>
+            <li><strong>Validaciones:</strong> determina si una cuenta aumenta por el Debe o por el Haber.</li>
+            <li><strong>Reportes:</strong> permite ordenar saldos por Activo, Pasivo y Patrimonio.</li>
+            <li><strong>Estados financieros:</strong> facilita presentar la situación financiera separando recursos, obligaciones y capital.</li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="card" aria-labelledby="asiento-title">
+        <h2 id="asiento-title">3. Tratamiento contable: Debe y Haber</h2>
+        <div class="rules">
+          <p><strong>Activos</strong> aumentan por el <strong>Debe</strong>.</p>
+          <p><strong>Pasivos</strong> aumentan por el <strong>Haber</strong>.</p>
+          <p><strong>Patrimonio</strong> aumenta por el <strong>Haber</strong>.</p>
+        </div>
+
+        <form id="entry-form" class="entry-form">
+          <label>
+            Cuenta
+            <select id="account-select" required></select>
+            <span id="account-rule" class="account-rule"></span>
+          </label>
+          <label>
+            Monto Debe
+            <input id="debit-input" type="number" min="0" step="0.01" value="0">
+          </label>
+          <label>
+            Monto Haber
+            <input id="credit-input" type="number" min="0" step="0.01" value="0">
+          </label>
+          <button type="submit">Agregar movimiento</button>
+        </form>
+
+        <table class="entry-table">
+          <thead>
+            <tr>
+              <th>Cuenta</th>
+              <th>Debe</th>
+              <th>Haber</th>
+            </tr>
+          </thead>
+          <tbody id="entry-body"></tbody>
+          <tfoot>
+            <tr>
+              <th>Total</th>
+              <th id="total-debit">0.00</th>
+              <th id="total-credit">0.00</th>
+            </tr>
+          </tfoot>
+        </table>
+        <div id="balance-message" class="message neutral" role="alert" aria-live="assertive">Ingrese movimientos para validar el asiento.</div>
+      </section>
+
+      <section class="card" aria-labelledby="diagrama-title">
+        <h2 id="diagrama-title">Diagrama lógico de validación</h2>
+        <ol class="flowchart">
+          <li>Inicio</li>
+          <li>Ingreso de movimientos</li>
+          <li>Cálculo total Debe</li>
+          <li>Cálculo total Haber</li>
+          <li>Comparación</li>
+          <li class="decision">¿Debe = Haber?<span>Sí → Asiento válido</span><span>No → Mostrar alerta de error</span></li>
+          <li>Fin</li>
+        </ol>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
