@@ -1,0 +1,5 @@
+__pycache__/
+*.py[cod]
+contabilidad_academica.db
+.pytest_cache/
+screenshots/*.png
